@@ -1,4 +1,4 @@
-Sim monitor
+Web Sim monitor (Php/Html)
 ===
 
 1. Download the files
