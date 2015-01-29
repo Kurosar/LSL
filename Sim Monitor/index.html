@@ -1,0 +1,466 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Longhorn Sim-Monitor 1.12</title>
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<style type="text/css">
+		${demo.css}
+	</style>
+	<script type="text/javascript">
+		$(function () {
+
+        // Get Data
+        
+        var AVATARS;
+        jQuery.ajax({
+        	url:    '_avatars.txt',
+        	success: function(result) {
+        		AVATARS = result;
+        		AVATARS = AVATARS.slice(0,-1);
+        		AVATARS = "["+AVATARS+"]";
+        		console.log(AVATARS);
+        	},
+        	async:   false
+        }); 
+        
+        var REGIONNAME;
+        jQuery.ajax({
+        	url:    '_regionname.txt',
+        	success: function(result) {
+        		REGIONNAME = result;
+        	},
+        	async:   false
+        }); 
+
+        var SERVERNAME;
+        jQuery.ajax({
+        	url:    '_server.txt',
+        	success: function(result) {
+        		SERVERNAME = result;
+        	},
+        	async:   false
+        }); 
+        
+        // Create the chart
+        $('#avatars').highcharts('StockChart', {
+
+        	chart: {
+        		borderColor: '#D8D8D8',
+        		borderRadius: 20,
+        		borderWidth: 2,
+        	},
+
+        	rangeSelector: {
+        		inputEnabled: $('#container').width() > 480,
+        		selected: 0,
+        		buttons: [{
+        			type: 'hour',
+        			count: 1,
+        			text: '1h'
+        		}, {
+        			type: 'hour',
+        			count: 2,
+        			text: '2h'
+        		}, {
+        			type: 'hour',
+        			count: 24,
+        			text: '24h'
+        		}, {
+        			type: 'week',
+        			count: 1,
+        			text: '1w'
+        		}, {
+        			type: 'month',
+        			count: 1,
+        			text: '1m'
+        		}, {
+        			type: 'all',
+        			text: 'All'
+        		}]
+        	},
+
+        	scrollbar : {
+        		enabled : false
+        	},
+
+        	title: {
+        		text: 'Avatar count on '+REGIONNAME,
+        		margin: -20
+        	},
+
+        	subtitle: {
+        		text: SERVERNAME,
+        		y: 30,
+        	},
+
+        	xAxis: {
+        		type: 'datetime',
+        		labels: {
+        			formatter: function() {
+        				return Highcharts.dateFormat('%a %d %b %H:%M', this.value);
+        			},
+        		},
+        	},
+
+        	yAxis: {
+        		title: {
+        			text: 'Avatar Number'
+        		},
+        		plotLines : [{
+        			value : 20,
+        			color : 'red',
+        			dashStyle : 'shortdash',
+        			width : 2,
+        			label : {
+        				text : 'Max avatars (Homestead)'
+        			}
+        		}],
+        		minPadding: 0,
+        		maxPadding: 0,
+        		min: 0,
+        		max: 25,
+        		tickInterval: 5,
+        		showFirstLabel: true,
+        		showLastLabel: true,
+        		startOnTick: true,
+        		endOnTick: true,
+        		minorTickInterval: 1,
+        	},
+
+        	series: [{
+        		name: 'Avatars',
+        		data: JSON.parse(AVATARS),
+        		type: 'spline',
+        		tooltip: {
+        			valueDecimals: 0
+        		}
+        	}],
+        });
+});
+</script>
+<script type="text/javascript">
+	$(function () {
+
+        // Get Data
+        
+        var FPS;
+        jQuery.ajax({
+        	url:    '_fps.txt',
+        	success: function(result) {
+        		FPS = result;
+        		FPS = FPS.slice(0,-1);
+        		FPS = "["+FPS+"]";
+        		console.log(FPS);
+        	},
+        	async:   false
+        }); 
+        
+        var REGIONNAME;
+        jQuery.ajax({
+        	url:    '_regionname.txt',
+        	success: function(result) {
+        		REGIONNAME = result;
+        	},
+        	async:   false
+        }); 
+
+        var SERVERNAME;
+        jQuery.ajax({
+        	url:    '_server.txt',
+        	success: function(result) {
+        		SERVERNAME = result;
+        	},
+        	async:   false
+        }); 
+        
+        // Create the chart
+        $('#fps').highcharts('StockChart', {
+
+        	chart: {
+        		borderColor: '#D8D8D8',
+        		borderRadius: 20,
+        		borderWidth: 2,
+        	},
+
+        	rangeSelector: {
+        		inputEnabled: $('#container').width() > 480,
+        		selected: 0,
+        		buttons: [{
+        			type: 'hour',
+        			count: 1,
+        			text: '1h'
+        		}, {
+        			type: 'hour',
+        			count: 2,
+        			text: '2h'
+        		}, {
+        			type: 'hour',
+        			count: 24,
+        			text: '24h'
+        		}, {
+        			type: 'week',
+        			count: 1,
+        			text: '1w'
+        		}, {
+        			type: 'month',
+        			count: 1,
+        			text: '1m'
+        		}, {
+        			type: 'all',
+        			text: 'All'
+        		}]
+        	},
+
+        	scrollbar : {
+        		enabled : false
+        	},
+
+        	title: {
+        		text: 'Frame per second on '+REGIONNAME,
+        		margin: -20
+        	},
+
+        	subtitle: {
+        		text: SERVERNAME,
+        		y: 30,
+        	},
+
+        	xAxis: {
+        		type: 'datetime',
+        		labels: {
+        			formatter: function() {
+        				return Highcharts.dateFormat('%a %d %b %H:%M', this.value);
+        			},
+        		},
+        	},
+
+        	yAxis: {
+        		title: {
+        			text: 'FPS'
+        		},
+        		minPadding: 0,
+        		maxPadding: 0,
+        		min: 0,
+        		max: 45,
+        		tickInterval: 15,
+        		showFirstLabel: true,
+        		showLastLabel: true,
+        		startOnTick: true,
+        		endOnTick: true,
+        		minorTickInterval: 5,
+				plotBands: [{ // Perfect
+					from: 45,
+					to: 40,
+					color: 'rgba(46, 204, 113, 0.1)',
+					label: {
+						text: 'Perfect',
+						style: {
+							color: '#2ecc71'
+						}
+					}
+				},
+			{ // OK
+				from: 40,
+				to: 35,
+				color: 'rgba(243, 156, 18, 0.1)',
+				label: {
+					text: 'Ok',
+					style: {
+						color: '#f39c12'
+					}
+				}
+			},
+			{ // Lag
+				from: 35,
+				to: 0,
+				color: 'rgba(231, 76, 60, 0.1)',
+				label: {
+					text: 'Lag',
+					style: {
+						color: '#e74c3c'
+					}
+				}
+			}],
+		},
+
+		series: [{
+			name: 'FPS',
+			data: JSON.parse(FPS),
+			type: 'spline',
+			tooltip: {
+				valueDecimals: 2
+			}
+		}],
+	});
+});
+</script>
+<script type="text/javascript">
+	$(function () {
+
+        // Get Data
+        
+        var DIL;
+        jQuery.ajax({
+        	url:    '_dil.txt',
+        	success: function(result) {
+        		DIL = result;
+        		DIL = DIL.slice(0,-1);
+        		DIL = "["+DIL+"]";
+        		console.log(DIL);
+        	},
+        	async:   false
+        }); 
+        
+        var REGIONNAME;
+        jQuery.ajax({
+        	url:    '_regionname.txt',
+        	success: function(result) {
+        		REGIONNAME = result;
+        	},
+        	async:   false
+        }); 
+
+        var SERVERNAME;
+        jQuery.ajax({
+        	url:    '_server.txt',
+        	success: function(result) {
+        		SERVERNAME = result;
+        	},
+        	async:   false
+        }); 
+        
+        // Create the chart
+        $('#dil').highcharts('StockChart', {
+
+        	chart: {
+        		borderColor: '#D8D8D8',
+        		borderRadius: 20,
+        		borderWidth: 2,
+        	},
+
+        	rangeSelector: {
+        		inputEnabled: $('#container').width() > 480,
+        		selected: 0,
+        		buttons: [{
+        			type: 'hour',
+        			count: 1,
+        			text: '1h'
+        		}, {
+        			type: 'hour',
+        			count: 2,
+        			text: '2h'
+        		}, {
+        			type: 'hour',
+        			count: 24,
+        			text: '24h'
+        		}, {
+        			type: 'week',
+        			count: 1,
+        			text: '1w'
+        		}, {
+        			type: 'month',
+        			count: 1,
+        			text: '1m'
+        		}, {
+        			type: 'all',
+        			text: 'All'
+        		}]
+        	},
+
+        	scrollbar : {
+        		enabled : false
+        	},
+
+        	title: {
+        		text: 'Time dilation on '+REGIONNAME,
+        		margin: -20
+        	},
+
+        	subtitle: {
+        		text: SERVERNAME,
+        		y: 30,
+        	},
+
+        	xAxis: {
+        		type: 'datetime',
+        		labels: {
+        			formatter: function() {
+        				return Highcharts.dateFormat('%a %d %b %H:%M', this.value);
+        			},
+        		},
+        	},
+
+        	yAxis: {
+        		title: {
+        			text: 'Time dilation'
+        		},
+        		minPadding: 0,
+        		maxPadding: 0,
+        		min: 0,
+        		max: 1,
+        		tickInterval: 0.2,
+        		showFirstLabel: true,
+        		showLastLabel: true,
+        		startOnTick: true,
+        		endOnTick: true,
+        		minorTickInterval: 0.1,
+				plotBands: [{ // Perfect
+					from: 0.9,
+					to: 1.0,
+					color: 'rgba(46, 204, 113, 0.1)',
+					label: {
+						text: 'Perfect',
+						style: {
+							color: '#2ecc71'
+						}
+					}
+				},
+			{ // OK
+				from: 0.9,
+				to: 0.8,
+				color: 'rgba(243, 156, 18, 0.1)',
+				label: {
+					text: 'Ok',
+					style: {
+						color: '#f39c12'
+					}
+				}
+			},
+			{ // Lag
+				from: 0.8,
+				to: 0,
+				color: 'rgba(231, 76, 60, 0.1)',
+				label: {
+					text: 'Lag',
+					style: {
+						color: '#e74c3c'
+					}
+				}
+			}],
+		},
+
+		series: [{
+			name: 'DIL',
+			data: JSON.parse(DIL),
+			type: 'spline',
+			tooltip: {
+				valueDecimals: 3
+			}
+		}],
+	});
+});
+</script>
+
+</head>
+<body>
+	<script src="js/highstock.js"></script>
+	<script src="js/modules/exporting.js"></script>
+
+
+	<div id="avatars" style="height: 500px"></div></br>
+	<div id="fps" style="height: 500px"></div></br>
+	<div id="dil" style="height: 500px"></div>
+</body>
+</html>
