@@ -1,6 +1,8 @@
 Web Sim monitor (Php/Html)
 ===
 
+**DEMO :** http://sakarias.eu/monitor/
+
 1. Download the files
 2. Upload them to your webhost
 3. Ensure the apache directory is writable (chmod 777 -R)
