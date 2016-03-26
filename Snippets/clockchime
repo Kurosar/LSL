@@ -1,0 +1,13 @@
+integer gIntHrs;
+
+default {
+    state_entry() {
+        llSetTimerEvent(1);
+    }
+
+    timer() {
+        if ((gIntHrs = (llGetUnixTime() % 86400) / 3600) != gIntHrs) {
+            llOwnerSay("DING!");
+        }
+    }
+}
