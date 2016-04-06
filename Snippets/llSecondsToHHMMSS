@@ -1,0 +1,9 @@
+string llSecondsToHHMMSS(integer seconds)
+{
+    integer secondes = seconds % 60;
+    integer minutes = (seconds / 60) % 60;
+    integer hours = seconds / 3600;
+    return llGetSubString("0" + (string)hours, -2, -1) + ":" 
+        + llGetSubString("0" + (string)minutes, -2, -1) + ":" 
+        + llGetSubString("0" + (string)secondes, -2, -1);
+}
