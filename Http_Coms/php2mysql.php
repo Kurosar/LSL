@@ -83,7 +83,7 @@ else if ($Method == "Checkstamps")
 	}
 
 	// Sending Query
-	$sql = "DELETE FROM SNO WHERE timestamp < DATE_SUB(NOW(), INTERVAL 1 MINUTE);";
+	$sql = "DELETE FROM $tablename WHERE timestamp < DATE_SUB(NOW(), INTERVAL 1 MINUTE);";
 
 	// Catching errors
 	if (mysqli_query($conn, $sql)) {
