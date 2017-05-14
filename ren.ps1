@@ -1,0 +1,1 @@
+gci -Recurse | ? { $_.Name -match '\s' -and (-not($_.psIsContainer))} | % { ren $_.fullName ($_.Name -replace '\s', '_') -WhatIf}
